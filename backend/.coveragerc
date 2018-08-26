@@ -1,0 +1,3 @@
+[run]
+source = channelstream_landing
+omit = channelstream_landing/test*
