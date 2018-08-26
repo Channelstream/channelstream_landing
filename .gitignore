@@ -21,3 +21,4 @@ Data.fs*
 coverage
 test
 node_modules
+static
