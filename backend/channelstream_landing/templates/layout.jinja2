@@ -11,6 +11,9 @@
 
     <title>Channelstream</title>
 
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+          integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
+          crossorigin="anonymous">
 
     <!-- Custom styles for this scaffold -->
     <link href="{{ request.static_url('channelstream_landing:static/theme.css') }}"
@@ -22,28 +25,52 @@
 
 <body>
 
-<div>
-    {% block content %}
-        <p>No content</p>
-    {% endblock content %}
-</div>
+<div class="global-container">
+    <header>
+        <h5 class="project-name">Channelstream</h5>
+        <p class="subheading">Easy websocket communication for applications</p>
 
-<div class="links">
-    <ul>
-        <li><i class="glyphicon glyphicon-cog icon-muted"></i><a
-                href="https://github.com/Channelstream/channelstream">Github Project</a></li>
-        <li><i class="glyphicon glyphicon-home icon-muted"></i><a
-                href="https://github.com/Channelstream/channelstream/issues">Issue Tracker</a></li>
-    </ul>
-</div>
+        <nav>
+            <a href="{{ request.route_path("/") }}">Index</a>
+            <a href="{{ request.route_path("tutorials", view="index") }}"><i class="fas fa-book"></i> Tutorials</a>
+            <a href="#"><i class="fas fa-eye"></i> Demo</a>
+            <a href="#"><i class="fas fa-broadcast-tower"></i> REST Explorer</a>
+            <a href="{{ request.static_url('channelstream_landing:static_bundled/jsdoc') }}" target="_blank">
+                <i class="fab fa-js"></i> JS Client Documentation</a>
+            <a href="https://github.com/Channelstream/channelstream">
+                <i class="fab fa-github"></i> Github
+            </a>
+        </nav>
 
+    </header>
 
-<div class="row">
-    <div class="copyright">
-        Copyright &copy; Channelstream Project
+    <div class="outer-content">
+        {% block content %}
+            <p>No content</p>
+        {% endblock content %}
     </div>
-</div>
 
+    <footer>
+        <div class="links">
+            <ul>
+                <li><i class="fab fa-github"></i> <a
+                        href="https://github.com/Channelstream/channelstream">Github Project</a>
+                </li>
+                <li><i class="fas fa-bug"></i> <a
+                        href="https://github.com/Channelstream/channelstream/issues">Issue
+                    Tracker</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="row">
+            <div class="copyright">
+                Copyright &copy; Channelstream Project
+            </div>
+        </div>
+
+    </footer>
+</div>
 
 </body>
 </html>

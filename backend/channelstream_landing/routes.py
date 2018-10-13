@@ -17,3 +17,5 @@ def includeme(config):
     )
 
     config.add_route('/', '/')
+    config.add_route('demo', '/demo/{view}')
+    config.add_route('tutorials', '/tutorials/{view}')

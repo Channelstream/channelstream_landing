@@ -1,5 +1,46 @@
 {% extends "layout.jinja2" %}
 
 {% block content %}
-<p>Index</p>
+
+    <div class="index-drawing">
+    <img src="{{ request.static_url('channelstream_landing:static_bundled/src/svg/drawing_p.svg') }}"/>
+    </div>
+
+    <div class="index-sections">
+
+        <section>
+
+            <h2>Open source</h2>
+            <p>
+                <strong>BSD License</strong> gives you the freedom to use and redistribute
+                server in both free and commercial software without restrictions.
+                Channelstream is built in <strong>Python</strong> language so it is easy to extend
+                and modify the functionality of the server itself.
+            </p>
+        </section>
+
+        <section>
+            <h2>Easy to use</h2>
+            <p>
+                Simple <strong>REST JSON</strong> interface allows all kinds of processes to communicate with the
+                server. Python, PHP, JS, web applications, crons, worker queues can send messages
+                to currently listening clients.
+            </p>
+            <p> Because the server is a standalone process it can be isolated in your infrastructure
+            and deployments to your application do not break active connections.</p>
+        </section>
+
+        <section>
+            <h2>Simple communication</h2>
+            <p>
+                All visitor communication is expected to pass via normal web application, so
+                existing security infrastructure can be used for validation and authentication of
+                clients and their messages.
+            </p>
+            <p>Easy to understand channel/user system allows for fast building of <strong>notification
+                systems or chat applications</strong>.</p>
+        </section>
+
+    </div>
+
 {% endblock content %}

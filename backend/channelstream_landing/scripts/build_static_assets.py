@@ -1,6 +1,9 @@
 import argparse
+import io
+import json
 import logging
 import os
+import pathlib
 import shutil
 import subprocess
 import sys
@@ -18,6 +21,8 @@ def build_assets(registry, *cmd_args, **cmd_kwargs):
         shutil.rmtree(build_dir)
     except FileNotFoundError as exc:
         log.warning(exc)
+    # your application frontend source code and configuration directory
+    # usually the containing main package.json
     assets_path = os.path.abspath(
         pkg_resources.resource_filename("channelstream_landing", "../../frontend")
     )
@@ -29,10 +34,16 @@ def build_assets(registry, *cmd_args, **cmd_kwargs):
             "node_modules", "bower_components", "__pycache__"
         ),
     )
-    # can be picked up by webpack/rollup/gulp config for configuration information
+    # configuration files/variables can be picked up by webpack/rollup/gulp
     os.environ["FRONTEND_ASSSET_ROOT_DIR"] = settings["statics.dir"]
-    # your commands to execute
+    worker_config = {'frontendAssetRootDir': settings["statics.dir"]}
+    with io.open(pathlib.Path(build_dir) / 'pyramid_config.json', 'w') as f:
+        f.write(json.dumps(worker_config))
+    # your actual build commands to execute:
+
+    # download all requirements
     subprocess.run(["yarn"], env=os.environ, cwd=build_dir, check=True)
+    # run build process
     subprocess.run(["yarn", "build"], env=os.environ, cwd=build_dir, check=True)
 
 

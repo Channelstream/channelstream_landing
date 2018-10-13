@@ -1,3 +1,108 @@
+@import 'sanitize.css';
+
+html {
+  min-height: 100%;
+}
+
 body {
-  background-color: #eeeeee;
+  background-color: #0988af;
+  background-image: url("../images/bg1.jpg");
+  background-size: cover;
+  background-position: top center;
+  color: #ffffff;
+  line-height: 1.5em;
+}
+
+.global-container {
+  max-width: 1200px;
+  margin: auto;
+
+  /* for sticky footer */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.outer-content {
+  flex-grow: 1;
+}
+
+header, main, footer {
+  flex-shrink: 0;
+}
+
+/* responsive images */
+img{
+  max-width: 100%;
+}
+
+a, a:link, a:visited {
+  font-weight: bolder;
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+  &:hover{
+    color: rgb(212, 236, 255);
+  }
+}
+
+header {
+  .project-name {
+    font-size: 4em;
+    font-weight: bold;
+    margin: 0.5em 0 0 0;
+    text-align: center;
+    text-shadow: 1px 1px 1px #d2e4ff;
+  }
+
+  .subheading {
+    font-size: 1.25em;
+    text-align: center;
+  }
+
+  nav {
+    text-align: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+    a {
+      display: inline-block;
+      padding: 1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      &:hover {
+        background-color: rgba(58, 250, 255, 0.05);
+      }
+    }
+
+  }
+}
+
+.index-sections {
+  @media (min-width: 700px) {
+    display: flex;
+  }
+
+  section {
+    @media (min-width: 700px) {
+      flex-grow: 1;
+      flex-basis: 0;
+    }
+    padding: 1em;
+  }
+
+}
+
+footer {
+  padding: 1em;
+  background-color: rgba(0, 0, 0, 0.05);
+  ul{
+    padding: 0;
+  }
+
+  li{
+    list-style-type: none;
+    list-style-position: unset;
+  }
+}
+
+.index-drawing{
+  text-align: center;
 }

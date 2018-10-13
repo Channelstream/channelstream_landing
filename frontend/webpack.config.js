@@ -42,6 +42,18 @@ module.exports = {
                     "css-loader", // translates CSS into CommonJS
                     "sass-loader" // compiles Sass to CSS
                 ]
+            },
+            {
+                test: /\.(png|jpg|gif)$/,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: '[path][name].[ext]',
+                            publicPath: '../'
+                        }
+                    }
+                ]
             }
         ]
     },
@@ -55,10 +67,22 @@ module.exports = {
         // This plugin will copy files over to ‘./dist’ without transforming them.
         // That's important because the custom-elements-es5-adapter.js MUST
         // remain in ES2015. We’ll talk about this a bit later :)
-        new CopyWebpackPlugin([            {
-            from: '**/*.js',
-            context: path.resolve(__dirname, 'node_modules/@webcomponents/webcomponentsjs'),
-            to: path.join(outputDir, 'node_modules/@webcomponents/webcomponentsjs')
-        }])
+        new CopyWebpackPlugin([
+            {
+                from: '**/*.js',
+                context: path.resolve(__dirname, 'node_modules/@webcomponents/webcomponentsjs'),
+                to: path.join(outputDir, 'node_modules/@webcomponents/webcomponentsjs')
+            },
+            {
+                from: '**/*',
+                context: path.resolve(__dirname, 'src/svg'),
+                to: path.join(outputDir, 'src/svg')
+            },
+            {
+                from: '**/*',
+                context: path.resolve(__dirname, 'jsdoc_out'),
+                to: path.join(outputDir, 'jsdoc')
+            },
+        ])
     ]
 };
