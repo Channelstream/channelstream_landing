@@ -1,15 +1,26 @@
 @import 'sanitize.css';
 
+
+// https://material.io/tools/color/#!/?view.left=0&view.right=0&primary.color=424242&secondary.color=BF360C
+
+$primary_color: #424242;
+$primary_color_text: #ffffff;
+$primary_color_light: #6d6d6d;
+$primary_color_dark: #1b1b1b;
+$secondary_color: #bf360c;
+$secondary_color_light: #f9683a;
+$secondary_color_dark: #870000;
+$secondary_color_text: #ffffff;
+
 html {
   min-height: 100%;
 }
 
 body {
-  background-color: #0988af;
-  background-image: url("../images/bg1.jpg");
+  background-color: $primary_color;
   background-size: cover;
   background-position: top center;
-  color: #ffffff;
+  color: $primary_color_text;
   line-height: 1.5em;
 }
 
@@ -38,10 +49,10 @@ img{
 
 a, a:link, a:visited {
   font-weight: bolder;
-  color: rgb(255, 255, 255);
+  color: $primary_color_text;
   text-decoration: none;
   &:hover{
-    color: rgb(212, 236, 255);
+    color: $primary_color_text;
   }
 }
 
@@ -51,7 +62,6 @@ header {
     font-weight: bold;
     margin: 0.5em 0 0 0;
     text-align: center;
-    text-shadow: 1px 1px 1px #d2e4ff;
   }
 
   .subheading {
@@ -61,15 +71,19 @@ header {
 
   nav {
     text-align: center;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
     a {
       display: inline-block;
       padding: 1em;
       text-transform: uppercase;
       text-decoration: none;
       &:hover {
-        background-color: rgba(58, 250, 255, 0.05);
+        background-color: $secondary_color;
       }
+      .fab, .fas{
+        color: $secondary_color_light;
+      }
+
     }
 
   }
@@ -100,6 +114,9 @@ footer {
   li{
     list-style-type: none;
     list-style-position: unset;
+    .fab, .fas{
+      color: $secondary_color_light;
+    }
   }
 }
 
