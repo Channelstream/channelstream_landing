@@ -3,7 +3,7 @@
 {% block content %}
 
     <div class="index-drawing">
-    <img src="{{ request.static_url('channelstream_landing:static_bundled/src/svg/drawing_p.svg') }}"/>
+        <img src="{{ request.static_url('channelstream_landing:static_bundled/svg/drawing_p.svg') }}"/>
     </div>
 
     <div class="index-sections">
@@ -22,12 +22,13 @@
         <section>
             <h2>Easy to use</h2>
             <p>
-                Simple <strong>REST JSON</strong> interface allows all kinds of processes to communicate with the
+                Simple <strong>REST JSON</strong> interface allows all kinds of processes to
+                communicate with the
                 server. Python, PHP, JS, web applications, crons, worker queues can send messages
                 to currently listening clients.
             </p>
             <p> Because the server is a standalone process it can be isolated in your infrastructure
-            and deployments to your application do not break active connections.</p>
+                and deployments to your application do not break active connections.</p>
         </section>
 
         <section>
@@ -42,5 +43,17 @@
         </section>
 
     </div>
+
+    <channelstream-landing-demo requestMethod="post" requestURL="/connect" relayUrl="{{ request.route_url('demo_payload_relay') }}">
+        <p>Login User</p>
+        <div>test</div>
+        <pre>
+            {
+                "username": "anon",
+                "channels": ["/index"]
+            }
+        </pre>
+    </channelstream-landing-demo>
+
 
 {% endblock content %}
