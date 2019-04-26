@@ -39,19 +39,32 @@
                 clients and their messages.
             </p>
             <p>Easy to understand channel/user system allows for fast building of <strong>notification
-                systems or chat applications</strong>.</p>
+                systems, chat applications or even game servers</strong>.</p>
         </section>
 
     </div>
 
     <channelstream-landing-demo requestMethod="post" requestURL="/connect" relayUrl="{{ request.route_url('demo_payload_relay') }}">
-        <p>Login User</p>
-        <div>test</div>
+        <p slot="header">Example: 1. Connect user</p>
+        <div slot="description">Register a new client connection (and create a user/channels objects if they do not exist already)</div>
         <pre>
             {
-                "username": "anon",
+                "username": "{{ demo_username }}",
                 "channels": ["/index"]
             }
+        </pre>
+    </channelstream-landing-demo>
+
+    <channelstream-landing-demo requestMethod="post" requestURL="/message" relayUrl="{{ request.route_url('demo_payload_relay') }}">
+        <p slot="header">Example: 2. Send message to channel</p>
+        <div slot="description">Broadcast a message to all users listening on `/index` channel</div>
+        <pre>
+            [{
+                "type": "message",
+                "user": "system",
+                "channel": "/index",
+                "message": {"text": "this is some text", "counter": 99}
+            }]
         </pre>
     </channelstream-landing-demo>
 
