@@ -20,7 +20,7 @@ function IndexPageView() {
     };
     connection.listenOpenedCallback = () => {
         new Noty({
-            text: 'Opened connection',
+            text: 'Opened websocket',
             type: 'alert',
             theme: 'sunset'
         }).show();
