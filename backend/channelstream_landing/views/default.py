@@ -33,3 +33,24 @@ def demo_payload_relay(request):
     )
 
     return response.json()
+
+@view_config(route_name="connect", renderer="json")
+def connect(request):
+    endpoint = "/connect"
+    server_port = 8000
+    signer = TimestampSigner("secret")
+    sig_for_server = signer.sign("channelstream")
+    secret_headers = {
+        "x-channelstream-secret": sig_for_server,
+        "Content-Type": "application/json",
+    }
+    payload = {
+        "username": f"Demo-user-{random.randint(1, 99999)}",
+        # in production you should validate this
+        "channels": request.json_body["channels"]
+    }
+    url = "http://127.0.0.1:%s%s" % (server_port, endpoint)
+    response = requests.post(
+        url, data=json.dumps(payload), headers=secret_headers
+    )
+    return response.json()

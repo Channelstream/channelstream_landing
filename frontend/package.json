@@ -21,7 +21,8 @@
     "rollup-plugin-node-resolve": "^4.0.0",
     "rollup-plugin-postcss": "^2.0.3",
     "rollup-plugin-sass": "^1.1.0",
-    "rollup-plugin-url": "^2.2.0"
+    "rollup-plugin-url": "^2.2.0",
+    "rollup-plugin-analyzer": "^3.0.0"
   },
   "dependencies": {
     "@channelstream/channelstream": "^0.0.5",
@@ -29,6 +30,7 @@
     "codemirror": "^5.44.0",
     "jsoneditor": "^5.30.0",
     "lit-element": "2.0.1",
+    "noty": "^3.1.4",
     "npm-check-updates": "^2.14.0",
     "pwa-helpers": "^0.8.3",
     "redux": "^4.0.0"

@@ -3,6 +3,7 @@ import nodeResolve from 'rollup-plugin-node-resolve';
 import postcss from 'rollup-plugin-postcss';
 import copy from 'rollup-plugin-copy';
 import postcssImport from 'postcss-import';
+import analyze from 'rollup-plugin-analyzer';
 
 let path = require('path');
 let devDestinationDir = path.join(__dirname, '..', 'static');
