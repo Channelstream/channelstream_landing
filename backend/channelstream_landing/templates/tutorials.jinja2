@@ -2,11 +2,47 @@
 
 {% block content %}
 
-<h2>Minimal working example</h2>
+{% filter markdown %}
+# Quickstart
 
-<h3>Create JS client connection </h3>
+First install python server in your environment:
 
-<pre>
+    pip install channelstream
+
+You will also need to handle websockets client side, there is a small ES module that can handle this:
+
+    npm install @channelstream/channelstream
+
+Now you can start the server itself:
+
+    channelstream -i config.ini
+
+You can grab example ini file on [GitHub](https://raw.githubusercontent.com/Channelstream/channelstream/master/channelstream.ini).
+
+The server by default will be acessible on [http://localhost:8000](http://localhost:8000) -
+    you can visit [API Explorer](http://localhost:8000/api-explorer) to test requests locally.
+
+Server defaults:
+
+* API secret: **secret**
+* Admin user: **admin**
+* Admin secret: **admin_secret**
+* Accepts API requests from: **127.0.0.1**
+* HTTP port: **8000**
+* listens on all interfaces
+
+
+{% endfilter %}
+
+<hr/>
+{% filter markdown %}
+
+## Minimal working example
+
+### Create JS client connection
+
+    :::javascript
+
     import {ChannelStreamConnection} from '@channelstream/channelstream';
     let connection = new ChannelStreamConnection();
     connection.connectUrl = '/connect';
@@ -16,10 +52,30 @@
     connection.listenMessageCallback = (messages) => {
         for (let message of messages) {
             // do something with messages
+            console.log('MESSAGE RECEIVED', message);
         }
     };
-    connection.channels = ["/index"];
+    connection.channels = ["/tutorial"];
+    // this will try to request connection UUID from `connectUrl` endpoint of your WEB application
     connection.connect();
-</pre>
+
+{% endfilter %}
+
+<script>
+    import {ChannelStreamConnection} from '@channelstream/channelstream';
+    let connection = new ChannelStreamConnection();
+    connection.connectUrl = '/connect';
+    connection.messageUrl = '/message';
+    connection.websocketUrl = 'ws://127.0.0.1:8000/ws';
+    connection.longPollUrl = 'http://127.0.0.1:8000/listen';
+    connection.listenMessageCallback = (messages) => {
+        for (let message of messages) {
+            // do something with messages
+            console.log('MESSAGE RECEIVED', message);
+        }
+    };
+    connection.channels = ["/tutorial"];
+    connection.connect();
+</script>
 
 {% endblock content %}

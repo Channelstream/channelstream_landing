@@ -1,5 +1,9 @@
 @import 'sanitize.css';
+@import 'codehilite.css';
 
+.codehilite pre {
+  padding: 1em;
+}
 
 // https://material.io/tools/color/#!/?view.left=0&view.right=0&primary.color=424242&secondary.color=BF360C
 
@@ -102,6 +106,8 @@ header {
     padding: 1em;
   }
 
+  margin: 2em 0;
+
 }
 
 footer {
@@ -122,4 +128,5 @@ footer {
 
 .index-drawing{
   text-align: center;
+  margin: 3em 0;
 }

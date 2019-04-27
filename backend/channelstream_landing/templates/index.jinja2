@@ -44,23 +44,9 @@
 
     </div>
 
-    <channelstream-landing-demo requestMethod="post" requestURL="/connect"
-                                relayUrl="{{ request.route_url('demo_payload_relay') }}">
-        <p slot="header">Example: 1. Connect user</p>
-        <div slot="description">Register a new client connection (and create a user/channels objects if they do not
-            exist already)
-        </div>
-        <pre>
-            {
-                "username": "{{ demo_username }}",
-                "channels": ["/index"]
-            }
-        </pre>
-    </channelstream-landing-demo>
-
     <channelstream-landing-demo requestMethod="post" requestURL="/message"
                                 relayUrl="{{ request.route_url('demo_payload_relay') }}">
-        <p slot="header">Example: 2. Send message to channel</p>
+        <p slot="header">Example: Send message to channel</p>
         <div slot="description">Broadcast a message to all users listening on `/index` channel</div>
         <pre>
             [{
@@ -71,7 +57,8 @@
         </pre>
     </channelstream-landing-demo>
 
-    <script>
-        window.IndexPageView()
+    <script type="module">
+        import {IndexPageView} from "{{ request.static_url('channelstream_landing:static_bundled/bundle-main.js') }}";
+        IndexPageView();
     </script>
 {% endblock content %}

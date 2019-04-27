@@ -1,4 +1,3 @@
-import './components/channelstream-landing-demo.js';
 import Noty from 'noty';
 import {ChannelStreamConnection} from '@channelstream/channelstream';
 
@@ -14,7 +13,8 @@ function IndexPageView() {
             new Noty({
                 text: JSON.stringify(message, null, 4),
                 type: 'success',
-                theme: 'sunset'
+                theme: 'sunset',
+                timeout: 3000
             }).show();
         }
     };
@@ -30,4 +30,4 @@ function IndexPageView() {
     connection.connect();
 }
 
-window.IndexPageView = IndexPageView;
+export {IndexPageView}

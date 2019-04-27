@@ -134,3 +134,5 @@ class ChannelstreamLandingDemo extends LitElement {
 
 // Register the new element with the browser.
 customElements.define('channelstream-landing-demo', ChannelstreamLandingDemo);
+
+export {ChannelstreamLandingDemo}
