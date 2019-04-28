@@ -44,7 +44,7 @@
 
     </div>
 
-    <channelstream-landing-demo requestMethod="post" requestURL="/message"
+    <channelstream-landing-demo requestMethod="post" requestEndpoint="/message"
                                 relayUrl="{{ request.route_url('demo_payload_relay') }}">
         <p slot="header">Example: Send message to channel</p>
         <div slot="description">Broadcast a message to all users listening on `/index` channel</div>
@@ -59,6 +59,11 @@
 
     <script type="module">
         import {IndexPageView} from "{{ request.static_url('channelstream_landing:static_bundled/bundle-main.js') }}";
-        IndexPageView();
+        IndexPageView({
+            connectUrl: '{{ request.route_url('connect') }}',
+            messageUrl: '{{ request.route_url('message') }}',
+            websocketUrl: '{{ request.route_url('channelstream_ws_url') }}',
+            longPollUrl: '{{ request.route_url('channelstream_public_url') }}listen'
+        });
     </script>
 {% endblock content %}

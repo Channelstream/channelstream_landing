@@ -15,7 +15,7 @@ let outputDir = path.resolve(destinationRootDir);
 
 export default [
     {
-        input: 'src/index.js',
+        input: 'src/app.js',
         output: {
             file: path.resolve(outputDir, 'bundle-main.js'),
             format: 'esm'

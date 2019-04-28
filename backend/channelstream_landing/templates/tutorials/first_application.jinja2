@@ -1,0 +1,150 @@
+{% extends "../layout.jinja2" %}
+
+{% block content %}
+
+{% filter markdown %}
+
+## First Application
+
+As mentioned in introduction page to connect browser to websocket server you need to do following steps:
+
+
+* Send a JSON request to connect endpoint of API, telling the server that user wants to connect to a channel called "/tutorial" - this is handled by your application - here is where authentication and authorization happens
+* Grab the response from the server - it will contain current state of user (it is created if user was connecting for the first time), state of channels that user connected to, and a connection UUID.
+* Return the connection UUID back to browser client
+* Client uses UUID to connect to a websocket or long polling endpoint
+
+### Step 1: Initialize javascript client
+
+    :::javascript
+
+    import {ChannelStreamConnection} from '@channelstream/channelstream';
+    let connection = new ChannelStreamConnection();
+    // this points to your application view
+    connection.connectUrl = '/connect';
+    connection.messageUrl = '/message';
+    // this points to channelstream
+    connection.websocketUrl = 'ws://127.0.0.1:8000/ws';
+    connection.longPollUrl = 'http://127.0.0.1:8000/listen';
+
+    connection.listenMessageCallback = (messages) => {
+        for (let message of messages) {
+            console.log('channelstream message', message);
+            // Do something on message received
+        }
+    };
+    // optional
+    connection.listenOpenedCallback = () => {
+        // Do something on websocket opened
+    };
+    // this will try to obtain connection UUID from `connectUrl` endpoint of your WEB application via XHR call
+    // and then use it to make websocket connection
+    connection.connect();
+
+{% endfilter %}
+
+{% filter markdown %}
+
+### Step 2: Implement /connect endpoint in your application
+
+We need to tell the server that user "someuser" connects to "/tutorial" channel.
+
+Channelstream requires all API calls to be signed with a shared secret, the default implementation used is
+`TimestampSigner` from `itsdangerous` package.
+
+    :::python
+    import requests
+    from itsdangerous import TimestampSigner
+
+    # create auth header for backend request
+    signer = TimestampSigner("secret")
+    sig_for_server = signer.sign("channelstream")
+    secret_headers = {
+        "x-channelstream-secret": sig_for_server,
+        "Content-Type": "application/json",
+    }
+    # connect user
+    payload = {
+        "username": "someuser",
+        "channels": ["/tutorial-1"]
+    }
+    response = requests.post("http://127.0.0.1:8000/connect", data=json.dumps(payload), headers=secret_headers)
+    response.json() # contains connection UUID
+
+{% endfilter %}
+
+<channelstream-landing-demo requestMethod="post" requestEndpoint="/connect"
+                            relayUrl="{{ request.route_url('demo_payload_relay') }}">
+    <p slot="header">Simulate the /connect API call to the server</p>
+    <div slot="description">Notice how "channels_info" get updated when you subscribe new users/create new channels.
+    If no actual websocket/long-polling connections are made by the clients those objects will get garbage collected.</div>
+    <pre>
+        {
+            "username": "someuser",
+            "channels": ["/tutorial-1"]
+        }
+    </pre>
+</channelstream-landing-demo>
+
+{% filter markdown %}
+
+### Step 3: Send message to users listening on /tutorial-1 channel
+
+    :::python
+    import requests
+    from itsdangerous import TimestampSigner
+
+    # create auth header for backend request
+    signer = TimestampSigner("secret")
+    sig_for_server = signer.sign("channelstream")
+    secret_headers = {
+        "x-channelstream-secret": sig_for_server,
+        "Content-Type": "application/json",
+    }
+    # send messages
+    payload = [
+        {
+            "user": "system",
+            "channel": "/tutorial-1",
+            "message": {
+                "text": "This can serve as notification",
+                "level": "warning"
+            }
+        }
+    ]
+    response = requests.post("http://127.0.0.1:8000/connect", data=json.dumps(payload), headers=secret_headers)
+
+{% endfilter %}
+
+    <channelstream-landing-demo requestMethod="post" requestEndpoint="/message"
+                                relayUrl="{{ request.route_url('demo_payload_relay') }}">
+        <p slot="header"Send the message via /message API call to the server</p>
+        <div slot="description">If you open up index page you will see that the connection there did not receive
+            the message sent here - this is because they are subscribed to different channels and this is determined
+            securely on your application side. However if you open this page in multiple windows/browsers you will
+            see everyone subscribed to this channel will receive the message.</div>
+        <pre>
+        [
+            {
+                "user": "system",
+                "channel": "/tutorial-1",
+                "message": {
+                    "text": "This can serve as notification",
+                    "level": "warning"
+                }
+            }
+        ]
+        </pre>
+    </channelstream-landing-demo>
+
+<script type="module">
+    import {DocsFirstAppView} from "{{ request.static_url('channelstream_landing:static_bundled/bundle-main.js') }}";
+    DocsFirstAppView({
+        connectUrl: '{{ request.route_url('connect') }}',
+        messageUrl: '{{ request.route_url('message') }}',
+        websocketUrl: '{{ request.route_url('channelstream_ws_url') }}',
+        longPollUrl: '{{ request.route_url('channelstream_public_url') }}listen'
+    });
+</script>
+
+{% endblock content %}

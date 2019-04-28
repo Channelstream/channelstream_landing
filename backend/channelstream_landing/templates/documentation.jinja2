@@ -1,0 +1,13 @@
+{% extends "layout.jinja2" %}
+
+{% block content %}
+
+<h1>Documentation</h1>
+
+<a href="{{ request.route_path("doc", page="installation") }}">Installation and basics</a>
+<p>Start here, install the server and learn the communication model</p>
+
+<a href="{{ request.route_path("doc", page="first_application") }}">Quickstart - your first application</a>
+<p>Learn how to make basic connection between your application and server.</p>
+
+{% endblock content %}

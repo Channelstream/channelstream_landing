@@ -10,7 +10,7 @@ class ChannelstreamLandingDemo extends LitElement {
     static get properties() {
         return {
             requestMethod: {type: String},
-            requestURL: {type: String},
+            requestEndpoint: {type: String},
             relayUrl: {type: String},
             loading: {type: Boolean},
             responseData: {type: Object}
@@ -78,7 +78,7 @@ class ChannelstreamLandingDemo extends LitElement {
             <slot name="description"></slot>
             
             <textarea class="json-editor"></textarea>
-            <p>Endpoint: <strong>${this.requestURL}</strong> HTTP method: <strong>${this.requestMethod.toUpperCase()}</strong></p>
+            <p>Endpoint: <strong>${this.requestEndpoint}</strong> HTTP method: <strong>${this.requestMethod.toUpperCase()}</strong></p>
             <button class="send-button" @click=${this.submit}>${sendLabel}</button>
             
             ${responseJson}
@@ -107,7 +107,7 @@ class ChannelstreamLandingDemo extends LitElement {
     submit() {
         let data = {
             payload: JSON.parse(this.editor.getValue()),
-            url: this.requestURL,
+            endpoint: this.requestEndpoint,
             method: this.requestMethod
         };
         this.loading = true;

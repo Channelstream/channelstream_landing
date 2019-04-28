@@ -37,7 +37,7 @@
 
         <nav>
             <a href="{{ request.route_path("/") }}">Index</a>
-            <a href="{{ request.route_path("tutorials", view="index") }}"><i class="fas fa-book"></i> Tutorials</a>
+            <a href="{{ request.route_path("doc", page="index") }}"><i class="fas fa-book"></i> Documentation</a>
             <a href="#"><i class="fas fa-eye fa-lg"></i> Demo</a>
             <a href="#"><i class="fas fa-broadcast-tower fa-lg"></i> API Explorer</a>
             <a href="{{ request.static_url('channelstream_landing:static_bundled/jsdoc') }}" target="_blank">

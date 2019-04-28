@@ -1,0 +1,77 @@
+{% extends "../layout.jinja2" %}
+
+{% block content %}
+
+{% filter markdown %}
+# Quickstart
+
+First install python server in your environment:
+
+    pip install channelstream
+
+You will also need to handle websockets client side, there is a small ES module that can handle this:
+
+    npm install @channelstream/channelstream
+
+Now you can start the server itself:
+
+    channelstream -i config.ini
+
+You can grab example ini file on [GitHub](https://raw.githubusercontent.com/Channelstream/channelstream/master/channelstream.ini).
+
+The server by default will be acessible on [http://localhost:8000](http://localhost:8000) -
+you can visit [API Explorer](http://localhost:8000/api-explorer) to test requests locally.
+
+Server defaults:
+
+* API secret: **secret**
+* Admin user: **admin**
+* Admin secret: **admin_secret**
+* Accepts API requests from: **127.0.0.1**
+* HTTP port: **8000**
+* listens on all interfaces
+
+
+{% endfilter %}
+<hr/>
+{% filter markdown %}
+
+## Communication flow of applications using Channelstream
+
+Before you dive into implementing your first application it is important for you to understand the communication and
+security model assumed.
+
+<img src="{{ request.static_url('channelstream_landing:static_bundled/svg/flow.svg') }}" class="docs-flow-graph"/>
+
+The server is language and framework agnostic - so it does not know nothing about architecture of your applications,
+It does not perform any authorization for client connections or messaging. Security is handled by your existing backend application.
+
+
+Users can subscribe to various "channels" - those are separate locations where messages are routed and can have different
+properties. For example "notification" channel might not store message history or will not broadcast presence information
+(joins/parts), this might be opposite for a "chat room" channel.
+
+The server can also store simple state objects associated with users, for example their status or avatar information.
+Currently there is no persistent storage and it should be treated as ephemeral solution, restart of the server will reset
+this information. It is normally created on-the-fly upon first request made.
+
+The **flow by default is unidirectional - all communication that your clients send goes to your application**, authorization
+and processing is performed there - application sends the final version of the payload to Channelstream and it is then relayed
+back to all listening clients based on message settings.
+
+For example to connect the client a JSON request you need to obtain connection identifier used to connect to listening
+sockets:
+
+* Send a JSON request to `connect` endpoint of API, telling the server that user wants to connect to a channel called
+"/tutorial" - this is handled by your application - here is where authentication and authorization happens
+* Grab the response from the server - it will contain current state of user (it is created if user was connecting
+for the first time), state of channels that user connected to, and a connection UUID.
+* Return the connection UUID back to browser client
+* Client uses UUID to connect to a websocket or long polling endpoint
+
+
+{% endfilter %}
+
+<a href="{{ request.route_path("doc", page="first_application") }}">You can now connect your first application. </a>
+
+{% endblock %}
