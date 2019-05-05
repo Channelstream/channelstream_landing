@@ -44,10 +44,11 @@
 
     </div>
 
+    <h2>Example: Send message to channel</h2>
+    <p>Broadcast a message to all users listening on `/index` channel</p>
+
     <channelstream-landing-demo requestMethod="post" requestEndpoint="/message"
                                 relayUrl="{{ request.route_url('demo_payload_relay') }}">
-        <p slot="header">Example: Send message to channel</p>
-        <div slot="description">Broadcast a message to all users listening on `/index` channel</div>
         <pre>
             [{
                 "user": "system",

@@ -1,0 +1,104 @@
+{% extends "../layout.jinja2" %}
+
+{% block content %}
+
+{% filter markdown %}
+
+# Example message API calls
+
+## Send a message to all users listening on specific channel
+
+This will broadcast a message to all connections listening on this channel,
+`from_user` does NOT have to be an existing connected user, it will inform listening clients about what entity
+sent the message.
+
+{% endfilter %}
+
+<channelstream-landing-demo requestMethod="post" requestEndpoint="/message"
+                            relayUrl="{{ request.route_url('demo_payload_relay') }}">
+    <pre>
+    [{
+      "channel": "tutorial/messaging",
+      "user": "from_user",
+      "message": {"text": "My message text", "can":"store_different_keys", "counter": 5}
+    }]
+    </pre>
+</channelstream-landing-demo>
+
+{% filter markdown %}
+
+## Send a message to some users listening on specific channel
+
+This will broadcast a message to some connections listening on this channel,
+You can also exclude users from the broadcast, for example, you might not want to message sender itself,
+or filter based on user permissions in your application.
+
+{% endfilter %}
+
+<channelstream-landing-demo requestMethod="post" requestEndpoint="/message"
+                            relayUrl="{{ request.route_url('demo_payload_relay') }}">
+    <p slot="header"></p>
+    <div slot="description"></div>
+    <pre>
+    [{
+      "channel": "tutorial/messaging",
+      "user": "from_user",
+      "pm_users": ["messaging-demo-user", "some-other-user"],
+      "exclude_users": [
+        "exclude-this-user", "random-user"
+      ],
+      "message": {"text": "My message text"}
+    }]
+</pre>
+</channelstream-landing-demo>
+
+{% filter markdown %}
+
+## Send a message globally to specific user
+
+This will broadcast a message to all user connections regardless of their channel.
+
+{% endfilter %}
+
+<channelstream-landing-demo requestMethod="post" requestEndpoint="/message"
+                            relayUrl="{{ request.route_url('demo_payload_relay') }}">
+    <p slot="header"></p>
+    <div slot="description"></div>
+    <pre>
+[{
+  "user": "from_user",
+  "pm_users": ["messaging-demo-user", "some-other-user"],
+  "message": {"text": "My message text"}
+}]
+</pre>
+</channelstream-landing-demo>
+
+{% filter markdown %}
+
+## Send a message to a channel and do not save it in history
+
+{% endfilter %}
+
+<channelstream-landing-demo requestMethod="post" requestEndpoint="/message"
+                            relayUrl="{{ request.route_url('demo_payload_relay') }}">
+    <pre>
+    [{
+      "channel": "tutorial/messaging",
+      "user": "system",
+      "no_history": true,
+      "message": {"text": "My message text"}
+    }]
+    </pre>
+</channelstream-landing-demo>
+
+<script type="module">
+    import {DocsMessagingView} from "{{ request.static_url('channelstream_landing:static_bundled/bundle-main.js') }}";
+    DocsMessagingView({
+        connectUrl: '{{ request.route_url('connect') }}',
+        messageUrl: '{{ request.route_url('message') }}',
+        websocketUrl: '{{ request.route_url('channelstream_ws_url') }}',
+        longPollUrl: '{{ request.route_url('channelstream_public_url') }}listen'
+    });
+</script>
+
+{% endblock content %}

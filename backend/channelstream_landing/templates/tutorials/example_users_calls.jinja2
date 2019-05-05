@@ -1,0 +1,128 @@
+{% extends "../layout.jinja2" %}
+
+{% block content %}
+
+{% filter markdown %}
+
+# Example user API calls
+
+## Connect/create user with default state
+
+User can be created with default state, when you set `fresh_user_state` the values will be
+created if user state does not exist at all. `user_state` on other hand will be used to update users state upon
+connection creation.
+
+{% endfilter %}
+
+<channelstream-landing-demo requestMethod="post" requestEndpoint="/connect"
+                            relayUrl="{{ request.route_url('demo_payload_relay') }}">
+    <pre>
+    {
+      "username": "some_user",
+      "state_public_keys": ["status", "color", "counter"],
+      "fresh_user_state": {
+        "status": "active",
+        "color": "red",
+        "counter": 5,
+        "bool": true
+        },
+      "user_state": {"counter": 6}
+    }
+</pre>
+</channelstream-landing-demo>
+
+{% filter markdown %}
+
+Remember one user can have multiple connections to different channels.
+Values of state is can be one of following types: string, integer, boolean or float.
+
+## Connect user to channels with different settings
+
+User connections can also be subscribed to channels upon creation.
+
+{% endfilter %}
+
+<channelstream-landing-demo requestMethod="post" requestEndpoint="/connect"
+                            relayUrl="{{ request.route_url('demo_payload_relay') }}">
+
+    <pre>
+    {
+      "username": "other_user",
+      "channels": ["/tutorial/a", "tutorial/b"],
+      "channel_configs": {
+            "/tutorial/a": {
+              "notify_presence": true,
+              "store_history": true,
+              "history_size": 50
+            },
+            "tutorial/b": {
+              "notify_state": true,
+              "store_frames": true
+            }
+        }
+    }
+    </pre>
+</channelstream-landing-demo>
+
+{% filter markdown %}
+
+Every channel might have different config based on its role. For example,
+for notification channel you might want to have smaller history size, or no notifications at all, you will
+also not want it to broadcast user state changes or join/part information.
+For chat like channels you might want opposite settings.
+
+## Subscribe live connection to additional channels
+
+Existing connections can be subscribed to even more channels. You can also specify `channel_configs` key in this call.
+
+{% endfilter %}
+
+<channelstream-landing-demo requestMethod="post" requestEndpoint="/subscribe"
+                            relayUrl="{{ request.route_url('demo_payload_relay') }}">
+    <pre>
+    {
+      "conn_id": "504b2f2a-cdd8-4d0e-a8f7-f68576af3376",
+      "channels": ["1", "2", "3"]
+    }
+    </pre>
+</channelstream-landing-demo>
+
+{% filter markdown %}
+
+## Unsubscribe live connection from a channel
+
+Existing connections can be removed from channels
+
+{% endfilter %}
+
+<channelstream-landing-demo requestMethod="post" requestEndpoint="/unsubscribe"
+                            relayUrl="{{ request.route_url('demo_payload_relay') }}">
+    <pre>
+    {
+      "conn_id": "504b2f2a-cdd8-4d0e-a8f7-f68576af3376",
+      "channels": ["3"]
+    }
+    </pre>
+
+</channelstream-landing-demo>
+
+{% filter markdown %}
+
+## Set/update state on user object
+
+This will emit `user_state_change` messages on channels that right config flags.
+
+{% endfilter %}
+
+<channelstream-landing-demo requestMethod="post" requestEndpoint="/user_state"
+                            relayUrl="{{ request.route_url('demo_payload_relay') }}">
+    <pre>
+    {
+      "user": "some_user",
+      "user_state": {"foobar": 99},
+      "state_public_keys": ["status", "color", "counter"]
+    }
+    </pre>
+</channelstream-landing-demo>
+
+{% endblock content %}

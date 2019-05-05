@@ -28,7 +28,7 @@ class ChannelstreamLandingDemo extends LitElement {
         ${unsafeCSS(CodeMirrorCssDarcula)}
         
         :host{
-           padding: 1em;
+           padding: 0.5em 0;
         }
         
         .header {
@@ -71,11 +71,6 @@ class ChannelstreamLandingDemo extends LitElement {
 
         return html`
         <div>
-            <div class="header">
-                <slot name="header"></slot>
-            </div>
-            
-            <slot name="description"></slot>
             
             <textarea class="json-editor"></textarea>
             <p>Endpoint: <strong>${this.requestEndpoint}</strong> HTTP method: <strong>${this.requestMethod.toUpperCase()}</strong></p>

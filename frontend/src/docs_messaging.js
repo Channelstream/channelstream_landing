@@ -1,7 +1,7 @@
 import Noty from 'noty';
 import {ChannelStreamConnection} from '@channelstream/channelstream';
 
-function IndexPageView(config) {
+function DocsMessagingView(config) {
     let connection = new ChannelStreamConnection();
     connection.connectUrl = config.connectUrl;
     connection.messageUrl = config.messageUrl;
@@ -10,10 +10,8 @@ function IndexPageView(config) {
     connection.listenMessageCallback = (messages) => {
         for (let message of messages) {
             console.log('channelstream message', message);
-            let msg = `From: <strong>${message.user}</strong>
-                       <p>${JSON.stringify(message.message, null, 4)}</p>`
             new Noty({
-                text: msg,
+                text: JSON.stringify(message, null, 4),
                 type: 'alert',
                 theme: 'sunset',
                 timeout: 3000
@@ -26,11 +24,10 @@ function IndexPageView(config) {
             type: 'success',
             theme: 'sunset'
         }).show();
-
     };
-    connection.channels = ["/index"];
-    connection.username = undefined;
+    connection.channels = ["tutorial/messaging"];
+    connection.username = "messaging-demo-user";
     connection.connect();
 }
 
-export {IndexPageView}
+export {DocsMessagingView}

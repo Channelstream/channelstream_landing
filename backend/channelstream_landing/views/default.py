@@ -43,9 +43,9 @@ def connect(request):
         "x-channelstream-secret": sig_for_server,
         "Content-Type": "application/json",
     }
+    # in production you should validate this
     payload = {
-        "username": f"Demo-user-{random.randint(1, 99999)}",
-        # in production you should validate this
+        "username": request.json_body.get("username") or f"Demo-user-{random.randint(1, 99999)}",
         "channels": request.json_body["channels"]
     }
     url = f"{server_url}{endpoint}"

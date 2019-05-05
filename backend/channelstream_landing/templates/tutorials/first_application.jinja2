@@ -73,11 +73,12 @@ Channelstream requires all API calls to be signed with a shared secret, the defa
 
 {% endfilter %}
 
+<h2>Simulate the /connect API call to the server</h2>
+<p>Notice how "channels_info" get updated when you subscribe new users/create new channels.
+    If no actual websocket/long-polling connections are made by the clients those objects will get garbage collected.</p>
+
 <channelstream-landing-demo requestMethod="post" requestEndpoint="/connect"
                             relayUrl="{{ request.route_url('demo_payload_relay') }}">
-    <p slot="header">Simulate the /connect API call to the server</p>
-    <div slot="description">Notice how "channels_info" get updated when you subscribe new users/create new channels.
-    If no actual websocket/long-polling connections are made by the clients those objects will get garbage collected.</div>
     <pre>
         {
             "username": "someuser",
@@ -116,26 +117,27 @@ Channelstream requires all API calls to be signed with a shared secret, the defa
 
 {% endfilter %}
 
-    <channelstream-landing-demo requestMethod="post" requestEndpoint="/message"
-                                relayUrl="{{ request.route_url('demo_payload_relay') }}">
-        <p slot="header"Send the message via /message API call to the server</p>
-        <div slot="description">If you open up index page you will see that the connection there did not receive
-            the message sent here - this is because they are subscribed to different channels and this is determined
-            securely on your application side. However if you open this page in multiple windows/browsers you will
-            see everyone subscribed to this channel will receive the message.</div>
-        <pre>
-        [
-            {
-                "user": "system",
-                "channel": "/tutorial-1",
-                "message": {
-                    "text": "This can serve as notification",
-                    "level": "warning"
-                }
+<h2>Send the message via /message API call to the server</h2>
+<p>If you open up index page you will see that the connection there did not receive
+    the message sent here - this is because they are subscribed to different channels and this is determined
+    securely on your application side. However if you open this page in multiple windows/browsers you will
+    see everyone subscribed to this channel will receive the message.</p>
+
+<channelstream-landing-demo requestMethod="post" requestEndpoint="/message"
+                            relayUrl="{{ request.route_url('demo_payload_relay') }}">
+    <pre>
+    [
+        {
+            "user": "system",
+            "channel": "/tutorial-1",
+            "message": {
+                "text": "This can serve as notification",
+                "level": "warning"
             }
-        ]
-        </pre>
-    </channelstream-landing-demo>
+        }
+    ]
+    </pre>
+</channelstream-landing-demo>
 
 <script type="module">
     import {DocsFirstAppView} from "{{ request.static_url('channelstream_landing:static_bundled/bundle-main.js') }}";
