@@ -73,7 +73,8 @@ For chat like channels you might want opposite settings.
 
 ## Subscribe live connection to additional channels
 
-Existing connections can be subscribed to even more channels. You can also specify `channel_configs` key in this call.
+Existing connections can be subscribed to even more channels. You can also specify `channel_configs` key in this call same
+as with `/connect` call.
 
 {% endfilter %}
 
@@ -91,7 +92,7 @@ Existing connections can be subscribed to even more channels. You can also speci
 
 ## Unsubscribe live connection from a channel
 
-Existing connections can be removed from channels
+Existing connections can be removed from channels.
 
 {% endfilter %}
 
@@ -110,7 +111,7 @@ Existing connections can be removed from channels
 
 ## Set/update state on user object
 
-This will emit `user_state_change` messages on channels that right config flags.
+This API call will also emit `user_state_change` messages on channels that have state change notifications enabled.
 
 {% endfilter %}
 
