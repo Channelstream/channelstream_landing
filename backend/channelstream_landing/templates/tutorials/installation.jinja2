@@ -7,7 +7,8 @@
 
 First install python server in your environment:
 
-    pip install channelstream
+    python3 -m venv channelstream_env
+    channelstream_env/bin/pip install channelstream
 
 You will also need to handle websockets client side, there is a small ES module that can handle this:
 
@@ -15,7 +16,7 @@ You will also need to handle websockets client side, there is a small ES module 
 
 Now you can start the server itself:
 
-    channelstream -i config.ini
+    channelstream_env/bin/channelstream -i config.ini
 
 You can grab example ini file on [GitHub](https://raw.githubusercontent.com/Channelstream/channelstream/master/channelstream.ini).
 
@@ -43,11 +44,17 @@ security model assumed.
 
 <img src="{{ request.static_url('channelstream_landing:static_bundled/svg/flow.svg') }}" class="docs-flow-graph"/>
 
+**The flow**:
+
+1. Client asks your application to if it can perform operation on websocket server
+2. Your application decides if the client can perform said operation (for example connect), passes that information to Channelstream, it is basically a broker.
+3. The server acts based on request from your web application and will execute the operation, for example connect user or fan out messages to all listening clients.
+
 The server is language and framework agnostic - so it does not know nothing about architecture of your applications,
 It does not perform any authorization for client connections or messaging. Security is handled by your existing backend application.
 
 
-Users can subscribe to various "channels" - those are separate locations where messages are routed and can have different
+Users can subscribe to various "channels" - those are separate locations where messages can be routed and can have different
 properties. For example "notification" channel might not store message history or will not broadcast presence information
 (joins/parts), this might be opposite for a "chat room" channel.
 
@@ -59,11 +66,12 @@ The **flow by default is unidirectional - all communication that your clients se
 and processing is performed there - application sends the final version of the payload to Channelstream and it is then relayed
 back to all listening clients based on message settings.
 
-For example to connect the client a JSON request you need to obtain connection identifier used to connect to listening
-sockets:
+For example to start listening for messages you need to obtain connection identifier required for
+establishing new websocket connections:
 
-* Send a JSON request to `connect` endpoint of API, telling the server that user wants to connect to a channel called
-"/tutorial" - this is handled by your application - here is where authentication and authorization happens
+* Send a JSON request **to your application**, telling the server that user wants to connect to a channel called
+"/tutorial" - here is where authentication and authorization happens, if your application decides user can connect it
+    should make a **signed request** to `/connect` endpoint of the server informing it who connects and to what channels.
 * Grab the response from the server - it will contain current state of user (it is created if user was connecting
 for the first time), state of channels that user connected to, and a connection UUID.
 * Return the connection UUID back to browser client

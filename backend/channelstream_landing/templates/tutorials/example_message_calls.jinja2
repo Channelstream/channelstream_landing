@@ -91,6 +91,49 @@ This will broadcast a message to all user connections regardless of their channe
     </pre>
 </channelstream-landing-demo>
 
+{% filter markdown %}
+
+## Modify message already sent to channel
+
+This API call will emit `message:edit` message type and will also rewrite channel's history.
+To test this copy paste UUID of the message returned by the response for the first example.
+It is important to send same `channel/pm_users/exclude` keys in the edit message if you want to notify same connections
+as in original message.
+
+{% endfilter %}
+
+<channelstream-landing-demo requestMethod="patch" requestEndpoint="/message"
+                            relayUrl="{{ request.route_url('demo_payload_relay') }}">
+<pre>
+    [{
+      "channel": "tutorial/messaging",
+      "uuid": "USE_UUID_FROM_FIRST_EXAMPLE",
+      "user": "my_new_user",
+      "message": {"text": "My new payload"}
+    }]
+</pre>
+</channelstream-landing-demo>
+
+{% filter markdown %}
+
+## Delete message already sent to channel
+
+This API call will emit `message:delete` message type and will also rewrite channel's history.
+To test this copy paste UUID of the message returned by the response for the first example.
+Remember to send `channel/pm_users/exclude` keys where applicable.
+
+{% endfilter %}
+
+<channelstream-landing-demo requestMethod="delete" requestEndpoint="/message"
+                            relayUrl="{{ request.route_url('demo_payload_relay') }}">
+<pre>
+    [{
+      "channel": "tutorial/messaging",
+      "uuid": "USE_UUID_FROM_FIRST_EXAMPLE"
+    }]
+</pre>
+</channelstream-landing-demo>
+
 <script type="module">
     import {DocsMessagingView} from "{{ request.static_url('channelstream_landing:static_bundled/bundle-main.js') }}";
     DocsMessagingView({
