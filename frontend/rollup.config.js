@@ -8,8 +8,11 @@ import analyze from 'rollup-plugin-analyzer';
 let path = require('path');
 let devDestinationDir = path.join(__dirname, '..', 'static');
 
+if (!process.env.FRONTEND_ASSSET_ROOT_DIR) {
+    console.log('env FRONTEND_ASSSET_ROOT_DIR not set, using default asset directory');
+}
 let destinationRootDir = process.env.FRONTEND_ASSSET_ROOT_DIR || devDestinationDir;
-console.log('Root directory:', destinationRootDir);
+console.log('Destination directory:', destinationRootDir);
 let outputDir = path.resolve(destinationRootDir);
 
 
@@ -43,6 +46,7 @@ export default [
             }),
             copy({
                 './node_modules/@webcomponents/webcomponentsjs': path.resolve(outputDir, 'node_modules/@webcomponents/webcomponentsj'),
+                './node_modules/@channelstream/channelstream': path.resolve(outputDir, 'node_modules/@channelstream/channelstream'),
                 './src/svg': path.resolve(outputDir, 'svg'),
                 './jsdoc_out': path.resolve(outputDir, 'jsdoc')
             })

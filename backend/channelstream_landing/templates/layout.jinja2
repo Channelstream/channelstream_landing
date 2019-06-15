@@ -38,8 +38,8 @@
         <nav>
             <a href="{{ request.route_path("/") }}">Index</a>
             <a href="{{ request.route_path("doc", page="index") }}"><i class="fas fa-book"></i> Documentation</a>
-            <a href="#"><i class="fas fa-eye fa-lg"></i> Demo</a>
-            <a href="#"><i class="fas fa-broadcast-tower fa-lg"></i> API Explorer</a>
+            <a href="{{ request.route_url("channelstream_demo") }}"><i class="fas fa-eye fa-lg"></i> Demo</a>
+            <a href="{{ request.static_url("channelstream_landing:static_bundled/api-explorer.html") }}" target="_blank"><i class="fas fa-broadcast-tower fa-lg"></i> API Explorer</a>
             <a href="{{ request.static_url('channelstream_landing:static_bundled/jsdoc') }}" target="_blank">
                 <i class="fab fa-js fa-lg"></i> JS Client Documentation</a>
             <a href="https://github.com/Channelstream/channelstream">

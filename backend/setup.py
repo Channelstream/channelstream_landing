@@ -15,7 +15,9 @@ requires = [
     'pyramid_debugtoolbar',
     'waitress',
     "markdown",
-    "pygments"
+    "pygments",
+    "requests",
+    "itsdangerous==1.1.0"
 ]
 
 tests_require = [

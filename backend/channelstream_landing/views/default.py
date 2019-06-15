@@ -20,7 +20,7 @@ def demo_payload_relay(request):
     endpoint = request.json_body["endpoint"]
     payload = request.json_body["payload"]
     method = request.json_body["method"]
-    signer = TimestampSigner("secret")
+    signer = TimestampSigner(request.registry.settings["channelstream.secret"])
     sig_for_server = signer.sign("channelstream")
     secret_headers = {
         "x-channelstream-secret": sig_for_server,
@@ -37,7 +37,7 @@ def demo_payload_relay(request):
 def connect(request):
     server_url = request.registry.settings["channelstream.url"]
     endpoint = "/connect"
-    signer = TimestampSigner("secret")
+    signer = TimestampSigner(request.registry.settings["channelstream.secret"])
     sig_for_server = signer.sign("channelstream")
     secret_headers = {
         "x-channelstream-secret": sig_for_server,

@@ -26,4 +26,5 @@ Getting Started
 
 - Run your project.
 
+    channelstream_landing_build_statics development.ini
     env/bin/pserve development.ini

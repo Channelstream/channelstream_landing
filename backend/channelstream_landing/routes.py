@@ -23,5 +23,6 @@ def includeme(config):
     config.add_route('message', '/message')
     config.add_route('demo', '/demo/{view}')
     config.add_route('doc', '/doc/{page}')
+    config.add_route('channelstream_demo', config.registry.settings["demo.url"])
     config.add_route('channelstream_public_url', config.registry.settings['channelstream.public_url'])
     config.add_route('channelstream_ws_url', config.registry.settings['channelstream.ws_url'])
