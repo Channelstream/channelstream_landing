@@ -17,6 +17,7 @@ requires = [
     "markdown",
     "pygments",
     "requests",
+    "channelstream",
     "itsdangerous==1.1.0"
 ]
 
