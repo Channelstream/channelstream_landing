@@ -28,6 +28,7 @@ def build_assets(registry, *cmd_args, **cmd_kwargs):
     assets_path = os.path.abspath(
         pkg_resources.resource_filename("channelstream_landing", "../../frontend")
     )
+    assets_path = os.environ.get("CHANNELSTREAM_FRONTEND_REPO_DIR", assets_path)
     # copy package static sources to temporary build dir
     shutil.copytree(
         assets_path,
@@ -56,6 +57,7 @@ def build_assets(registry, *cmd_args, **cmd_kwargs):
         "from 'http://127.0.0.1:8000/static/channelstream/index.js'",
         f"from '/static_bundled/node_modules/@channelstream/channelstream/src/index.js'",
     ).replace("http://127.0.0.1:8000/openapi.json", "/static_bundled/openapi.json")
+    pathlib.Path(settings["statics.dir"]).mkdir(exist_ok=True)
     with io.open(pathlib.Path(settings["statics.dir"]) / "api-explorer.html", "w") as f:
         f.write(to_write)
     result = requests.get(
