@@ -1,0 +1,52 @@
+{% extends "../layout.jinja2" %}
+
+{% block content %}
+
+    {% filter markdown %}
+# Channelstream behind NGINX proxy
+
+To run websocket server behind a reverse-proxy you need to turn gzip responses off and send upgrade headers.
+Here is an example config required to create websocket connections.
+
+
+    :::text
+
+    upstream backend_channelstream_server {
+        server 127.0.0.1:8000 weight=1 max_fails=5 fail_timeout=30s; #comment
+    }
+
+
+    server {
+        listen 80;
+        server_name server.domain.org ;
+
+
+        root /var/www/server.domain.org;
+
+        access_log /var/log/nginx/server.domain.org.access.log;
+        error_log /var/log/nginx/server.domain.org.error.log;
+
+        location / {
+                client_max_body_size    1m;
+                client_body_buffer_size 128k;
+                proxy_connect_timeout   390;
+                proxy_send_timeout      390;
+                proxy_read_timeout      390;
+                tcp_nodelay             off;
+                proxy_http_version 1.1;
+                proxy_set_header Upgrade $http_upgrade;
+                proxy_set_header Connection "upgrade";
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header Host $host;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-Forwarded-Proto $scheme;
+                proxy_set_header X-Url-Scheme $scheme;
+                gzip off;
+                proxy_pass http://backend_channelstream_server;
+        }
+    }
+
+
+
+    {% endfilter %}
+{% endblock %}
