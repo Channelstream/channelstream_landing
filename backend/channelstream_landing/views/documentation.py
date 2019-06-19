@@ -4,13 +4,14 @@ from pkg_resources import resource_exists, resource_isdir, resource_string
 from pyramid.view import view_config
 from pyramid.exceptions import HTTPNotFound
 from pyramid.renderers import render_to_response
+from channelstream_landing.utils import ssl_rewriter
 
 
 @view_config(
     route_name="doc", match_param="page=index", renderer="../templates/documentation.jinja2"
 )
 def index(request):
-    return {}
+    return {"ssl_rewriter": ssl_rewriter}
 
 
 @view_config(route_name="doc")
@@ -19,8 +20,7 @@ def render_tutorial_page(request):
 
     resouce_path = os.path.join("../templates/tutorials", f"{page_path}.jinja2")
     exists = resource_exists("channelstream_landing", resouce_path[2:])
-    print(resouce_path, exists)
     if not exists:
         raise HTTPNotFound()
 
-    return render_to_response(resouce_path, {}, request)
+    return render_to_response(resouce_path, {"ssl_rewriter": ssl_rewriter}, request)

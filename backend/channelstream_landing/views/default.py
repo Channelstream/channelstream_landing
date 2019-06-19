@@ -4,6 +4,7 @@ import requests
 
 from itsdangerous import TimestampSigner
 from pyramid.view import view_config
+from channelstream_landing.utils import ssl_rewriter
 
 
 @view_config(route_name="/", renderer="../templates/index.jinja2")
@@ -11,6 +12,7 @@ def index_view(request):
     return {
         "project": "channelstream_landing",
         "demo_username": f"Anon-{random.randint(1, 999)}",
+        "ssl_rewriter": ssl_rewriter
     }
 
 
