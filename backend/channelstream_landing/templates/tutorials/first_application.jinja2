@@ -146,8 +146,8 @@ Channelstream requires all API calls to be signed with a shared secret, the defa
     DocsFirstAppView({
         connectUrl: '{{ request.route_url('connect') }}',
         messageUrl: '{{ request.route_url('message') }}',
-        websocketUrl: '{{ request.route_url('channelstream_ws_url') }}',
-        longPollUrl: '{{ request.route_url('channelstream_public_url') }}listen'
+        websocketUrl: '{{ ssl_rewriter(request, request.route_url('channelstream_ws_url')) }}',
+        longPollUrl: '{{ ssl_rewriter(request, request.route_url('channelstream_public_url')) }}listen'
     });
 </script>
 
