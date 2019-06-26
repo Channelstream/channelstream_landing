@@ -1,0 +1,51 @@
+{% extends "../layout.jinja2" %}
+
+{% block content %}
+
+{% filter markdown %}
+
+# FAQ
+
+## Where can I find examples of demos?
+
+Currently there are two python application demos provided (pull requests with demos in different languages welcome).
+
+* [Real-time notification example with Flask][notification-app]
+* [Complex application showcasing real-time chat with multiple channels and actions][chat-complex-app]
+
+## What languages are supported?
+
+Since the server communicates with JSON all languages are supported. The API is language agnostic. Your web applications,
+    crons, queues can communicate with it just fine.
+
+## How is the resource usage under load?
+
+This is deployment dependant and varies depending on what you are doing with the server, but biggest known
+deployment is around 600 concurrent connections and the server takes 100MB of ram and around 5% of a single core
+in this specific scenario.
+
+## I run python 2.7 - can I use the server?
+
+Yes, 0.6.14 release is the one that supports both Python 2.x and 3.x - you can use it directly with python 2.7.
+However, since the server is standalone you can deploy latest version it in a Python 3.6 virtualenv which is the recommended
+approach.
+
+## Does the server support federation or direct client-to-client messaging?
+
+Not out of the box currently but when the plugin API materializes this could be possible via separate plugins.
+
+[notification-app]: https://github.com/Channelstream/channelstream/blob/master/demo/notification/app.py
+[chat-complex-app]: https://github.com/Channelstream/channelstream/tree/master/demo/chat
+
+## Does this server compete with Matrix, Rocketchat, Zulip or Mattermost?
+
+Solutions mentioned above are first and foremost chat services (you need to for example register accounts in Matrix).
+Channelstream aims to be general purpose real-time push server that tries to not get in your way.
+
+You can model the data flow how you want, mix types of channels and messages as you see fit
+to meet your business goals, for example you can create an online game lobby and specific game channels for players to subscribe.
+It can be also (and there are few implementations) used do develop real time chats but this is just one of it's many uses.
+
+{% endfilter %}
+
+{% endblock content %}

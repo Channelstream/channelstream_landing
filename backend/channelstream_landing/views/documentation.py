@@ -18,7 +18,7 @@ def index(request):
 def render_tutorial_page(request):
     page_path = request.matchdict.get("page")
 
-    resouce_path = os.path.join("../templates/tutorials", f"{page_path}.jinja2")
+    resouce_path = os.path.join("../templates/pages", f"{page_path}.jinja2")
     exists = resource_exists("channelstream_landing", resouce_path[2:])
     if not exists:
         raise HTTPNotFound()
