@@ -6,6 +6,7 @@ services:
       - "6543:6543"
     environment:
       CHANNELSTREAM_URL: "http://channelstream:8000"
+      DEMO_URL: "http://demo.channelstream.org"
     networks:
       - channelstream
   channelstream:
