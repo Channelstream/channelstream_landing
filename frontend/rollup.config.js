@@ -6,7 +6,7 @@ import postcssImport from 'postcss-import';
 import analyze from 'rollup-plugin-analyzer';
 
 let path = require('path');
-let devDestinationDir = path.join(__dirname, '..', 'static');
+let devDestinationDir = path.join(__dirname, '..', 'static_build');
 
 if (!process.env.FRONTEND_ASSSET_ROOT_DIR) {
     console.log('env FRONTEND_ASSSET_ROOT_DIR not set, using default asset directory');
@@ -45,18 +45,11 @@ export default [
                 plugins: [postcssImport]
             }),
             copy({
-                './node_modules/@webcomponents/webcomponentsjs': path.resolve(outputDir, 'node_modules/@webcomponents/webcomponentsj'),
+                './node_modules/@webcomponents/webcomponentsjs': path.resolve(outputDir, 'node_modules/@webcomponents/webcomponentsjs'),
                 './node_modules/@channelstream/channelstream': path.resolve(outputDir, 'node_modules/@channelstream/channelstream'),
-                './src/svg': path.resolve(outputDir, 'svg'),
-                './jsdoc_out': path.resolve(outputDir, 'jsdoc')
+                './src/svg': path.resolve(outputDir, 'svg')
             })
         ]
     },
 
 ]
-copy({
-    "src/index.html": "dist/index.html",
-    "node_modules/bootstrap/dist": "dist/vendor/bootstrap",
-    "node_modules/font-awesome": "dist/vendor/font-awesome",
-    verbose: true
-})

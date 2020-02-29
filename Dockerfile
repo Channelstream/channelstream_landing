@@ -25,6 +25,8 @@ RUN mkdir /opt/rundir
 RUN chown -R application /opt/rundir
 RUN mkdir /opt/venv
 RUN chown -R application /opt/venv
+RUN mkdir /opt/rundir/static_build
+RUN chown -R application /opt/rundir/static_build
 # Copy the current directory contents into the container at /opt/application
 COPY backend/requirements.txt /tmp/requirements.txt
 
@@ -43,7 +45,7 @@ COPY backend /opt/application
 RUN /opt/venv/bin/pip install --disable-pip-version-check --trusted-host pypi.python.org -e .
 
 # copy pre-built js
-COPY --from=static /opt/static /opt/rundir/static
+COPY --from=static /opt/static_build /opt/rundir/static_build
 # Make port 6543 available to the world outside this container
 EXPOSE 6543
 VOLUME /opt/rundir

@@ -7,7 +7,7 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup --watch -c",
-    "jsdoc": "jsdoc -c ./jsdoc.json"
+    "jsdoc": "jsdoc -c ./jsdoc.json; rollup -c rollup.config.jsdoc.js"
   },
   "devDependencies": {
     "docdash": "^1.0.0",

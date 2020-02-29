@@ -1,7 +1,6 @@
 #!/bin/bash
 set -e
 cp /opt/application/development.ini /opt/rundir/config.ini
-env
 if ! [ -z "$CHANNELSTREAM_URL" ]
 then
     sourceVar="\/"
@@ -32,5 +31,11 @@ then
     replacementVar="\/"
     sed -i "s/channelstream.secret.*/channelstream.secret = ${CHANNELSTREAM_SECRET//$sourceVar/$replacementVar}/" /opt/rundir/config.ini
 fi
+
+if [ ! -f /opt/rundir/static_build/openapi.json ]; then
+    pushd /opt/rundir
+    channelstream_landing_build_statics config.ini --with-main-assets=0 --with-jsdoc=0
+    popd
+fi;
 
 exec "$@"

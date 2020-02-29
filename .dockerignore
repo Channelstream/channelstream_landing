@@ -3,6 +3,7 @@
 backend/*.egg-info
 !frontend
 frontend/node_modules
+frontend/jsdoc_out
 !docker-entrypoint.sh
 !docker-entrypoint-static.sh
 !AUTHORS
