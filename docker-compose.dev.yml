@@ -1,14 +1,20 @@
 version: '3.2'
 services:
   web:
+    stdin_open: true
+    tty: true
     volumes:
       - type: bind
         source: ./backend
         target: /opt/application
-      - type: bind
-        source: ./rundir
+        read_only: true
+      - type: volume
+        source: rundir
         target: /opt/rundir
+    command: ["pserve", "--reload", "/opt/rundir/config.ini"]
   statics:
+    stdin_open: true
+    tty: true
     build:
       context: .
       dockerfile: Dockerfile.static
@@ -18,9 +24,10 @@ services:
       - type: bind
         source: ./frontend
         target: /opt/frontend
-      - type: bind
-        source: ./rundir
+        read_only: true
+      - type: volume
+        source: rundir
         target: /opt/rundir
 volumes:
-  rundir:
-  application:
+  rundir: {}
+  application: {}

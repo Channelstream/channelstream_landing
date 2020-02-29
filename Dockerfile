@@ -49,4 +49,4 @@ EXPOSE 6543
 VOLUME /opt/rundir
 ENTRYPOINT ["/opt/docker-entrypoint.sh"]
 # Run application when the container launches
-CMD ["pserve", "--reload", "/opt/rundir/config.ini"]
+CMD ["pserve", "/opt/rundir/config.ini"]
