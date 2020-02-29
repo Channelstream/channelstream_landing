@@ -7,19 +7,23 @@
 
 First install python server in your environment:
 
+    :::bash
     python3 -m venv channelstream_env
     channelstream_env/bin/pip install channelstream>=0.7
 
 You will also need to handle websockets client side, there is a small ES module that can handle this:
 
+    :::bash
     npm install @channelstream/channelstream
 
 Generate a fresh config file:
 
+    :::bash
     channelstream_env/bin/channelstream_utils make_config -o config.ini
 
 Now you can start the server itself:
 
+    :::bash
     channelstream_env/bin/channelstream -i config.ini
 
 The server by default will be acessible on [http://localhost:8000](http://localhost:8000) -
