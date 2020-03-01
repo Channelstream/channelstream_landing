@@ -6,8 +6,10 @@ services:
       - "6543:6543"
     environment:
       CHANNELSTREAM_URL: "http://channelstream:8000"
-      DEMO_URL: "http://demo.channelstream.org"
+      DEMO_URL: "http://127.0.0.1:6544"
     networks:
+      - channelstream
+    depends_on:
       - channelstream
   channelstream:
     image: channelstream/channelstream:latest
@@ -17,6 +19,17 @@ services:
       - channelstream
     environment:
       CHANNELSTREAM_ALLOW_POSTING_FROM: "0.0.0.0"
+  demo:
+    build: https://github.com/Channelstream/channelstream_demos.git
+    ports:
+      - "6544:6544"
+    environment:
+      CHANNELSTREAM_URL: "http://channelstream:8000"
+      DEMO_PORT: 6544
+    networks:
+      - channelstream
+    depends_on:
+      - channelstream
 volumes:
   logvolume01: {}
 networks:
