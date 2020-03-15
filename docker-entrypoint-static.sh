@@ -1,6 +1,13 @@
 #!/bin/bash
 set -e
-if [ ! -d node_modules ]; then
-     yarn
+if [ -n "${USER_UID}" ]; then
+  usermod -u $USER_UID application
 fi
-exec "$@"
+if [ -n "${USER_GID}" ]; then
+  groupmod -g $USER_GID application
+fi
+
+if [ ! -d node_modules ]; then
+     gosu application yarn
+fi
+gosu application "$@"

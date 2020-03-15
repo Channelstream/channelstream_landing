@@ -1,6 +1,16 @@
 #!/bin/bash
 set -e
-cp /opt/application/development.ini /opt/rundir/config.ini
+
+# change the app uid to ones set from environment
+if [ -n "${USER_UID}" ]; then
+  usermod -u $USER_UID application
+fi
+if [ -n "${USER_GID}" ]; then
+  groupmod -g $USER_GID application
+fi
+
+gosu application cp /opt/application/development.ini /opt/rundir/config.ini
+
 if ! [ -z "$CHANNELSTREAM_URL" ]
 then
     sourceVar="\/"
@@ -34,8 +44,8 @@ fi
 
 if [ ! -f /opt/rundir/static_build/openapi.json ]; then
     pushd /opt/rundir
-    channelstream_landing_build_statics config.ini --with-main-assets=0 --with-jsdoc=0
+    gosu application channelstream_landing_build_statics config.ini --with-main-assets=0 --with-jsdoc=0
     popd
 fi;
 
-exec "$@"
+gosu application "$@"

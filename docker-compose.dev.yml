@@ -19,7 +19,7 @@ services:
       context: .
       dockerfile: Dockerfile.static
     environment:
-      FRONTEND_ASSSET_ROOT_DIR: "/opt/rundir/static"
+      FRONTEND_ASSSET_ROOT_DIR: "/opt/rundir/static_build"
     volumes:
       - type: bind
         source: ./frontend
