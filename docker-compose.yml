@@ -7,6 +7,10 @@ services:
     environment:
       CHANNELSTREAM_URL: "http://channelstream:8000"
       DEMO_URL: "http://127.0.0.1:6544"
+    volumes:
+      - type: volume
+        source: rundir
+        target: /opt/rundir
     networks:
       - channelstream
     depends_on:
@@ -26,6 +30,10 @@ services:
     environment:
       CHANNELSTREAM_URL: "http://channelstream:8000"
       DEMO_PORT: 6544
+    volumes:
+      - type: volume
+        source: rundir
+        target: /opt/rundir
     networks:
       - channelstream
     depends_on:
