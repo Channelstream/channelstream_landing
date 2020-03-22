@@ -40,5 +40,6 @@ services:
       - channelstream
 volumes:
   logvolume01: {}
+  rundir: {}
 networks:
   channelstream:
