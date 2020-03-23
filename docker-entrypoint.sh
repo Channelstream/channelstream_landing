@@ -9,7 +9,9 @@ if [ -n "${USER_GID}" ]; then
   groupmod -g $USER_GID application
 fi
 
-gosu application cp /opt/application/development.ini /opt/rundir/config.ini
+if [ ! -f /opt/rundir/config.ini ]; then
+  gosu application cp /opt/application/development.ini /opt/rundir/config.ini
+fi
 
 if ! [ -z "$CHANNELSTREAM_URL" ]
 then
