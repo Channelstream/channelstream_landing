@@ -16,7 +16,7 @@ markupsafe==1.1.1         # via jinja2, mako, pyramid-jinja2
 pastedeploy==2.1.0        # via plaster-pastedeploy
 plaster-pastedeploy==0.7  # via channelstream_landing (setup.py), pyramid
 plaster==1.0              # via plaster-pastedeploy, pyramid
-pygments==2.5.2           # via channelstream_landing (setup.py), pyramid-debugtoolbar
+pygments==2.7.4           # via channelstream_landing (setup.py), pyramid-debugtoolbar
 pyramid-debugtoolbar==4.6.1  # via channelstream_landing (setup.py)
 pyramid-jinja2==2.8       # via channelstream_landing (setup.py)
 pyramid-mako==1.1.0       # via pyramid-debugtoolbar
