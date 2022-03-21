@@ -26,7 +26,7 @@ requests==2.23.0          # via channelstream_landing (setup.py)
 translationstring==1.3    # via pyramid
 urllib3==1.25.8           # via requests
 venusian==3.0.0           # via pyramid
-waitress==1.4.3           # via channelstream_landing (setup.py)
+waitress==2.1.1           # via channelstream_landing (setup.py)
 webob==1.8.6              # via pyramid
 zope.deprecation==4.4.0   # via pyramid, pyramid-jinja2
 zope.interface==4.7.1     # via pyramid
