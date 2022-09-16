@@ -10,7 +10,7 @@ hupper==1.10.1            # via pyramid
 idna==2.9                 # via requests
 itsdangerous==1.1.0       # via channelstream_landing (setup.py)
 jinja2==2.11.1            # via pyramid-jinja2
-mako==1.1.1               # via pyramid-mako
+mako==1.2.2               # via pyramid-mako
 markdown==3.2.1           # via channelstream_landing (setup.py)
 markupsafe==1.1.1         # via jinja2, mako, pyramid-jinja2
 pastedeploy==2.1.0        # via plaster-pastedeploy
