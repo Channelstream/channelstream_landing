@@ -1,11 +1,11 @@
 # Use an official Python runtime as a parent image
-FROM node:13.8.0-buster-slim AS static
+FROM node:22-bookworm-slim AS static
+# Vite/esbuild ship prebuilt binaries, so no need for python/make/gcc to
+# compile native node-gyp deps. We still need gosu for the dev entrypoint.
 RUN apt-get update && apt-get install -y \
-    python3 make build-essential gosu \
+    gosu \
  && rm -rf /var/lib/apt/lists/*
 
-ENV PATH $PATH:env/bin
-ENV PYTHON python3
 # we do not want node to run as id 1000
 RUN groupmod -g 999 node && usermod -u 999 -g 999 node
 RUN useradd --create-home application
@@ -13,12 +13,15 @@ USER application
 COPY --chown=application frontend /opt/frontend
 WORKDIR /opt/frontend
 ENV FRONTEND_ASSSET_ROOT_DIR /opt/frontend/static_build
-RUN yarn
-RUN yarn jsdoc
-RUN yarn build
+# Install JS deps deterministically from package-lock.json, generate the
+# JSDoc HTML output (consumed by the static-copy step in vite.config.js),
+# then build the production bundle.
+RUN npm ci
+RUN npm run jsdoc
+RUN npm run build
 # throw away the js container
 # Use an official Python runtime as a parent image
-FROM python:3.7.6-slim-stretch
+FROM python:3.13-slim-bookworm
 
 RUN apt-get update && apt-get install -y \
     gosu \

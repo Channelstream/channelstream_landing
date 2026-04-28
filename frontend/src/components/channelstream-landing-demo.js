@@ -1,8 +1,11 @@
 // Import the LitElement base class and html helper function
 import {LitElement, html, css, unsafeCSS} from 'lit-element';
 import CodeMirror from 'codemirror';
-import CodeMirrorCss from 'codemirror/lib/codemirror.css';
-import CodeMirrorCssDarcula from 'codemirror/theme/darcula.css';
+// Vite needs the `?inline` query to expose CSS contents as a string export
+// (the default behavior would inject a <style> tag). The CSS is embedded
+// into the component's shadow DOM via unsafeCSS() further below.
+import CodeMirrorCss from 'codemirror/lib/codemirror.css?inline';
+import CodeMirrorCssDarcula from 'codemirror/theme/darcula.css?inline';
 
 // Extend the LitElement base class
 class ChannelstreamLandingDemo extends LitElement {

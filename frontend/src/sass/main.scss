@@ -1,5 +1,5 @@
-@import 'sanitize.css';
-@import 'codehilite.css';
+// sanitize.css and codehilite.css are imported from src/sass.js via Vite's
+// CSS pipeline so they get bundled into bundle-sass.css alongside this file.
 
 .codehilite pre {
   padding: 1em;

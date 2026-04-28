@@ -17,7 +17,9 @@ requires = [
     "markdown",
     "pygments",
     "requests",
-    "itsdangerous==1.1.0"
+    # TimestampSigner is the only itsdangerous symbol used; its API is stable
+    # across 1.x and 2.x, so we no longer pin to the legacy 1.1.0.
+    "itsdangerous>=2.0",
 ]
 
 tests_require = [
