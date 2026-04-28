@@ -61,7 +61,7 @@ RUN /opt/venv/bin/pip install --disable-pip-version-check --trusted-host pypi.py
 COPY --from=static --chown=application /opt/frontend/static_build /opt/rundir/static_build
 # Make port 6543 available to the world outside this container
 EXPOSE 6543
-VOLUME /opt/rundir
+# VOLUME /opt/rundir
 USER root
 ENTRYPOINT ["/opt/docker-entrypoint.sh"]
 # Run application when the container launches
