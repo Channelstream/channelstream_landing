@@ -42,24 +42,34 @@ export default defineConfig({
         // Don't inline CSS into the JS bundle — we want bundle-sass.css as a
         // standalone file the templates link via <link rel="stylesheet">.
         cssCodeSplit: true,
-        rollupOptions: {
-            input: {
-                // The keys here become the entry filenames (see entryFileNames
-                // below), so they must match what the Pyramid templates load.
+        // Library mode: bundle-main.js is consumed by inline
+        // <script type="module"> tags in the Pyramid templates that do
+        //   import {IndexPageView} from ".../bundle-main.js";
+        // Vite's default app build sets preserveEntrySignatures=false, which
+        // tree-shakes those named exports away. Library mode preserves them.
+        lib: {
+            // Object form keeps the keys as output filenames so the Pyramid
+            // templates' static_url() references resolve unchanged.
+            entry: {
                 'bundle-main': path.resolve(__dirname, 'src/app.js'),
                 'bundle-sass': path.resolve(__dirname, 'src/sass.js'),
             },
+            formats: ['es'],
+            // Stable, hash-free filenames per entry (e.g. bundle-main.js).
+            fileName: (_format, entryName) => `${entryName}.js`,
+        },
+        rollupOptions: {
             output: {
-                format: 'esm',
-                entryFileNames: '[name].js',
                 chunkFileNames: '[name]-[hash].js',
                 // Keep the extracted bundle-sass.css filename stable; hash
                 // any other emitted assets so they remain cache-safe.
+                // Rollup 4 exposes `names: string[]` on AssetInfo (the singular
+                // `name` is deprecated).
                 assetFileNames: (assetInfo) => {
-                    if (assetInfo.name && assetInfo.name.endsWith('.css')) {
-                        return '[name][extname]';
-                    }
-                    return '[name]-[hash][extname]';
+                    const isCss = assetInfo.names?.some((n) =>
+                        n.endsWith('.css')
+                    );
+                    return isCss ? '[name][extname]' : '[name]-[hash][extname]';
                 },
             },
         },
